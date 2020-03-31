@@ -1,4 +1,7 @@
-import os from 'os';
-import System from './models/system';
+import Application from './application';
 
-console.log(new System());
+const app = new Application();
+
+app.start();
+
+setTimeout(() => app.stop(), 10000);
