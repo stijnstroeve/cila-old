@@ -1,3 +1,5 @@
 {
-  "tick_delay": 5
+  "tick_delay": 1,
+  "mongodb_url": "mongodb://localhost:27017/",
+  "mongodb_connection_tries": 1
 }

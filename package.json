@@ -6,11 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src/modules -d lib",
-    "start": "node lib/core/index.js"
+    "start": "babel src/modules -d lib && node lib/core/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mongodb": "^3.5.5",
     "os": "^0.1.1"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import System from './models/system';
-import {LOG_PREFIX} from './constants';
 import ConfigReader from './configurations/configReader';
+import DatabaseConnector from '../database/databaseConnector';
+import CilaLogger from '../logger/cilaLogger'
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',
@@ -17,27 +18,40 @@ export default class Application {
      * Starts the application
      */
     start() {
-        console.log(LOG_PREFIX, 'Starting...');
+        CilaLogger.log('Starting...');
 
         this.state = ApplicationState.STARTING;
-        this.system = new System();
         this.config = ConfigReader.read();
+        this.system = new System();
 
-        this._startInterval();
+        // Try to connect to the database
+        DatabaseConnector.connect(this.config).then((database) => {
+            this.database = database;
+
+            // When successfully connected to the database, start the application interval timer
+            this._startInterval();
+
+            CilaLogger.log('Started!');
+        }).catch(() => {
+            // When no connection to the database could be made, exit the application
+            process.exit(1);
+        });
+
     }
 
     /**
      * Stops the application
      */
     stop() {
-        console.log(LOG_PREFIX, 'Stopping...');
+        CilaLogger.log('Stopping...');
 
         this.state = ApplicationState.STOPPED;
 
-        // Clear the interval
+        // Stop the application by clearing the interval
         if (this.interval !== undefined) {
             clearInterval(this.interval);
         }
+        process.exit(0);
     }
 
     _startInterval() {
@@ -47,7 +61,8 @@ export default class Application {
     _tick() {
         if (this.system !== undefined) {
             this.system.updateUptime();
-            console.log(LOG_PREFIX, 'New Uptime: ' + this.system.uptime);
+
+            CilaLogger.log('New Uptime: ' + this.system.uptime);
         }
     }
 }
