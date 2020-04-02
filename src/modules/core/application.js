@@ -33,10 +33,9 @@ export default class Application {
             this._startInterval();
             this._initializeRestAPI();
 
-            CilaLogger.log('Started!');
         }).catch(() => {
             // When no connection to the database could be made, exit the application
-            process.exit(1);
+            // process.exit(1);
         });
 
     }
@@ -57,7 +56,7 @@ export default class Application {
     }
 
     _initializeRestAPI() {
-        this.restAPI = new RestAPI();
+        this.restAPI = new RestAPI(this.config.environment);
         this.restAPI.listen(this.config.rest_api_port);
     }
 

@@ -1,9 +1,13 @@
 import express from 'express';
+import {Paper} from 'paper-wrapper';
 import CilaLogger from '../logger/cilaLogger';
+import UserModule from './modules/UserModule';
 
 export default class RestAPI {
-    constructor() {
+    constructor(environment) {
         this.app = express();
+
+        this._initializePaper(environment);
     }
 
     /**
@@ -14,7 +18,24 @@ export default class RestAPI {
         this.port = port;
 
         this.app.listen(this.port, () => {
-            CilaLogger.log('Started REST api on port ' + this.port);
+            CilaLogger.log('Started REST API on port ' + this.port);
         });
+    }
+
+    _initializePaper(environment) {
+        // Create a new paper wrapper instance with the given config
+        const paper = new Paper({
+            environment: environment,
+            suppressMessages: true,
+            suppressWarnings: false
+        });
+
+        // Register the paper modules
+        paper.registerModules([
+            new UserModule()
+        ]);
+
+        const paperRouter = paper.getRoutes();
+        this.app.use(paperRouter);
     }
 }
