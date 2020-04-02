@@ -2,6 +2,7 @@ import System from './models/system';
 import ConfigReader from './configurations/configReader';
 import DatabaseConnector from '../database/databaseConnector';
 import CilaLogger from '../logger/cilaLogger';
+import RestAPI from '../rest';
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',
@@ -28,8 +29,9 @@ export default class Application {
         DatabaseConnector.connect(this.config).then((database) => {
             this.database = database;
 
-            // When successfully connected to the database, start the application interval timer
+            // When successfully connected to the database, start the application interval timer and initialize the rest api
             this._startInterval();
+            this._initializeRestAPI();
 
             CilaLogger.log('Started!');
         }).catch(() => {
@@ -52,6 +54,11 @@ export default class Application {
             clearInterval(this.interval);
         }
         process.exit(0);
+    }
+
+    _initializeRestAPI() {
+        this.restAPI = new RestAPI();
+        this.restAPI.listen(this.config.rest_api_port);
     }
 
     _startInterval() {
