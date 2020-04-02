@@ -1,7 +1,7 @@
 import System from './models/system';
 import ConfigReader from './configurations/configReader';
 import DatabaseConnector from '../database/databaseConnector';
-import CilaLogger from '../logger/cilaLogger'
+import CilaLogger from '../logger/cilaLogger';
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',

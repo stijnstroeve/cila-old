@@ -1,11 +1,11 @@
-import {MongoClient} from 'mongodb';
+import mongoose from 'mongoose';
 import CilaLogger from '../logger/cilaLogger'
 
 export default class DatabaseConnector {
     /**
      * Try to connect to the database
      * @param config The application configuration
-     * @returns {Promise<MongoClient>}
+     * @returns {Promise<>}
      */
     static connect(config) {
         this.config = config;
@@ -34,7 +34,7 @@ export default class DatabaseConnector {
     }
 
     static _tryConnect() {
-        return MongoClient.connect(this.config.mongodb_url, {
+        return mongoose.connect(this.config.mongodb_url, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         });
