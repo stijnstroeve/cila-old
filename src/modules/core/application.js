@@ -1,8 +1,8 @@
 import System from './models/system';
-import ConfigReader from './configurations/configReader';
 import DatabaseConnector from '../database/databaseConnector';
 import CilaLogger from '../logger/cilaLogger';
 import RestAPI from '../rest';
+import config from './configurations/config';
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',
@@ -22,11 +22,10 @@ export default class Application {
         CilaLogger.log('Starting...');
 
         this.state = ApplicationState.STARTING;
-        this.config = ConfigReader.read();
         this.system = new System();
 
         // Try to connect to the database
-        DatabaseConnector.connect(this.config).then((database) => {
+        DatabaseConnector.connect().then((database) => {
             this.database = database;
 
             // When successfully connected to the database, start the application interval timer and initialize the rest api
@@ -35,7 +34,7 @@ export default class Application {
 
         }).catch(() => {
             // When no connection to the database could be made, exit the application
-            // process.exit(1);
+            // process.exit(1); //TODO Uncomment this
         });
 
     }
@@ -56,12 +55,12 @@ export default class Application {
     }
 
     _initializeRestAPI() {
-        this.restAPI = new RestAPI(this.config.environment);
-        this.restAPI.listen(this.config.rest_api_port);
+        this.restAPI = new RestAPI(config.environment);
+        this.restAPI.listen(config.rest_api_port);
     }
 
     _startInterval() {
-        this.interval = setInterval(() => this._tick(), this.config.tick_delay * 1000);
+        this.interval = setInterval(() => this._tick(), config.tick_delay * 1000);
     }
 
     _tick() {

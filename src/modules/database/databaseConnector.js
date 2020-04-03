@@ -1,16 +1,14 @@
 import mongoose from 'mongoose';
 import CilaLogger from '../logger/cilaLogger'
+import config from '../core/configurations/config';
 
 export default class DatabaseConnector {
     /**
      * Try to connect to the database
-     * @param config The application configuration
      * @returns {Promise<>}
      */
-    static connect(config) {
-        this.config = config;
-
-        const maxTries = this.config.mongodb_connection_tries;
+    static connect() {
+        const maxTries = config.mongodb_connection_tries;
         let tries = 0;
 
         CilaLogger.log('Connecting to database');
@@ -34,7 +32,7 @@ export default class DatabaseConnector {
     }
 
     static _tryConnect() {
-        return mongoose.connect(this.config.mongodb_url, {
+        return mongoose.connect(config.mongodb_url, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         });

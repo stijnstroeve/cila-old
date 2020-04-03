@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
+import config from '../../core/configurations/config';
 
 const Schema = mongoose.Schema;
 
@@ -46,12 +47,12 @@ UserSchema.methods.validPassword = function(password) {
 UserSchema.methods.generateJWT = function() {
     const today = new Date();
     const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
+    exp.setDate(today.getDate() + config.jwt_lifetime_days);
 
     return jwt.sign({
         'id': this._id,
-        'exp': parseInt(exp.getTime() / 1000), // TODO Configuration expiry date
-    }, 'gfgkgfnbjbfg'); // TODO Configuration secret
+        'exp': parseInt(exp.getTime() / 1000),
+    }, config.jwt_secret);
 };
 
 UserSchema.methods.toAuthJSON = function() {

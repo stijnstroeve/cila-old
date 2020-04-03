@@ -2,6 +2,7 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
 import User from '../database/models/User';
+import config from '../core/configurations/config';
 
 const localOptions = {
     usernameField: 'email',
@@ -9,7 +10,6 @@ const localOptions = {
 };
 
 passport.use(new LocalStrategy(localOptions, (email, password, done) => {
-    console.log('wut 2');
     User.findOne({email: email}, (err, user) => {
         if (err) {
             // TODO: Log error somewhere
@@ -25,7 +25,7 @@ passport.use(new LocalStrategy(localOptions, (email, password, done) => {
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'gfgkgfnbjbfg' // TODO Configuration secret
+    secretOrKey: config.jwt_private_key
 };
 
 passport.use(new JwtStrategy(jwtOptions, (jwtPayload, done) => {
