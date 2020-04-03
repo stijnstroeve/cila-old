@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 const Schema = mongoose.Schema;
 
 const hashPassword = (password, salt) => {
-    return crypto.pbkdf2Sync(password, salt, 15000, 512, 'sha512').toString('hex');
+    return crypto.pbkdf2Sync(password, salt, 15000, 512, 'sha512').toString('hex'); // TODO Configuration password settings
 };
 
 export const UserSchema = new Schema({
@@ -26,7 +26,11 @@ export const UserSchema = new Schema({
         index: true
     },
     hash: String,
-    salt: String
+    salt: String,
+    disabled: {
+        type: Boolean,
+        default: false
+    }
 }, {timestamps: true});
 
 UserSchema.methods.setPassword = function(password) {
@@ -45,10 +49,9 @@ UserSchema.methods.generateJWT = function() {
     exp.setDate(today.getDate() + 60);
 
     return jwt.sign({
-        id: this._id,
-        username: this.username,
-        exp: parseInt(exp.getTime() / 1000),
-    }, 'secret');
+        'id': this._id,
+        'exp': parseInt(exp.getTime() / 1000), // TODO Configuration expiry date
+    }, 'gfgkgfnbjbfg'); // TODO Configuration secret
 };
 
 UserSchema.methods.toAuthJSON = function() {

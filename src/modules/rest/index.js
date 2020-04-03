@@ -1,4 +1,6 @@
 import express from 'express';
+import passport from '../auth/passport';
+import bodyParser from 'body-parser';
 import {Paper} from 'paper-wrapper';
 import CilaLogger from '../logger/cilaLogger';
 import UserModule from './modules/UserModule';
@@ -31,9 +33,15 @@ export default class RestAPI {
         });
 
         // Register the paper modules
-        paper.registerModules([
+        paper.addModules([
             new UserModule()
         ]);
+
+
+        // Middleware
+        this.app.use(passport.initialize());
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: true }));
 
         const paperRouter = paper.getRoutes();
         this.app.use(paperRouter);

@@ -1,4 +1,5 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
+import {AuthorizationMiddleware} from '../../middleware/AuthorizationMiddleware';
 
 export class AuthorizeMethod extends ModuleMethod {
     constructor() {
@@ -6,12 +7,15 @@ export class AuthorizeMethod extends ModuleMethod {
 
         this.optionalParameters = [];
         this.request = 'authorize';
-        this.requestType = RequestType.GET;
+        this.requestType = RequestType.POST;
         this.requiredParameters = [];
+
+        this.middleware = [new AuthorizationMiddleware()];
     }
 
     handle(request) {
-        request.respond({hello: 'world'});
+        // Successful response with empty body
+        request.respond(null);
     }
 
 }

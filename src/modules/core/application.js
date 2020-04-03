@@ -68,7 +68,7 @@ export default class Application {
         if (this.system !== undefined) {
             this.system.updateUptime();
 
-            CilaLogger.log('New Uptime: ' + this.system.uptime);
+            // CilaLogger.log('New Uptime: ' + this.system.uptime);
         }
     }
 }
