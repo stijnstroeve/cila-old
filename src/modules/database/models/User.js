@@ -6,7 +6,7 @@ import config from '../../core/configurations/config';
 const Schema = mongoose.Schema;
 
 const hashPassword = (password, salt) => {
-    return crypto.pbkdf2Sync(password, salt, 15000, 512, 'sha512').toString('hex'); // TODO Configuration password settings
+    return crypto.pbkdf2Sync(password, salt, config.password_iterations, config.password_key_length, 'sha512').toString('hex');
 };
 
 export const UserSchema = new Schema({
