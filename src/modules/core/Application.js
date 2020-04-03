@@ -1,6 +1,6 @@
-import System from './models/system';
-import DatabaseConnector from '../database/databaseConnector';
-import CilaLogger from '../logger/cilaLogger';
+import System from './models/System';
+import DatabaseConnector from '../database/DatabaseConnector';
+import CilaLogger from '../logger/CilaLogger';
 import RestAPI from '../rest';
 import config from './configurations/config';
 

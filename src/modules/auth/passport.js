@@ -3,6 +3,7 @@ import LocalStrategy from 'passport-local';
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
 import User from '../database/models/User';
 import config from '../core/configurations/config';
+import winstonLogger from '../logger/winston';
 
 const localOptions = {
     usernameField: 'email',
@@ -12,12 +13,13 @@ const localOptions = {
 passport.use(new LocalStrategy(localOptions, (email, password, done) => {
     User.findOne({email: email}, (err, user) => {
         if (err) {
-            // TODO: Log error somewhere
+            winstonLogger.error(err);
             return done(null, false);
         }
         if (user && user.validPassword(password)) {
             return done(null, user);
         } else {
+            winstonLogger.error('Login tried');
             return done(null, false);
         }
     });
@@ -25,13 +27,13 @@ passport.use(new LocalStrategy(localOptions, (email, password, done) => {
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: config.jwt_private_key
+    secretOrKey: config.jwt_secret
 };
 
 passport.use(new JwtStrategy(jwtOptions, (jwtPayload, done) => {
     User.findOne({_id: jwtPayload.id}, (err, user) => {
         if (err) {
-            // TODO: Log error somewhere
+            winstonLogger.error(err);
             return done(null, false);
         }
         return done(null, user || false);

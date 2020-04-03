@@ -1,3 +1,3 @@
-import Color from './color';
+import Color from './Color';
 
 export const loggerPrefixColor = Color.BLUE;

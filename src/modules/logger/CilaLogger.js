@@ -1,4 +1,4 @@
-import Color from './color';
+import Color from './Color';
 import {loggerPrefixColor} from './constants';
 
 export default class CilaLogger {

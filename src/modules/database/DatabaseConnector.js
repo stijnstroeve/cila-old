@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import CilaLogger from '../logger/cilaLogger'
+import CilaLogger from '../logger/CilaLogger'
 import config from '../core/configurations/config';
 
 export default class DatabaseConnector {

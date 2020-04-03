@@ -2,7 +2,7 @@ import express from 'express';
 import passport from '../auth/passport';
 import bodyParser from 'body-parser';
 import {Paper} from 'paper-wrapper';
-import CilaLogger from '../logger/cilaLogger';
+import CilaLogger from '../logger/CilaLogger';
 import UserModule from './modules/UserModule';
 
 export default class RestAPI {

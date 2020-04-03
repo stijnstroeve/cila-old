@@ -1,5 +1,6 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
 import User from '../../../database/models/User';
+import winstonLogger from '../../../logger/winston';
 
 export class CreateUserMethod extends ModuleMethod {
     constructor() {
@@ -24,11 +25,12 @@ export class CreateUserMethod extends ModuleMethod {
         user.setPassword(request.parameters.password);
 
         // Insert a new user into the collection
-        User.collection.insertOne(user).then(() => {
-            request.respond(null);
-        }).catch(() => {
-            // TODO: Save the error somewhere
-            request.error(null);
+        User.collection.insertOne(user, (err) => {
+            if (err) {
+                winstonLogger.error(err);
+                return request.error(null);
+            }
+            return request.respond(null);
         });
     }
 

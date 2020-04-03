@@ -7,5 +7,8 @@
   "jwt_secret": "developmentkey",
   "jwt_lifetime_days": 30,
   "password_iterations": 15000,
-  "password_key_length": 512
+  "password_key_length": 512,
+  "log_directory": "logs/",
+  "max_log_file_size": "1m",
+  "max_log_files": 10
 }
