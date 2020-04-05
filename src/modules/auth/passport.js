@@ -19,7 +19,6 @@ passport.use(new LocalStrategy(localOptions, (email, password, done) => {
         if (user && user.validPassword(password)) {
             return done(null, user);
         } else {
-            winstonLogger.error('Login tried');
             return done(null, false);
         }
     });

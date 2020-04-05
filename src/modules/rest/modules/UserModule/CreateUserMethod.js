@@ -1,6 +1,8 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
 import User from '../../../database/models/User';
-import winstonLogger from '../../../logger/winston';
+import ResultError from '../../error';
+import {getMongoError} from '../../../database/mongoError';
+import {MONGODB_DUPLICATION_KEY} from '../../../database/constants';
 
 export class CreateUserMethod extends ModuleMethod {
     constructor() {
@@ -17,6 +19,15 @@ export class CreateUserMethod extends ModuleMethod {
         this.middleware = [];
     }
 
+    handleError(err) {
+        const errorType = getMongoError(err);
+        if(errorType === MONGODB_DUPLICATION_KEY) {
+            return ResultError('USER_EXISTS', err)
+        } else {
+            return ResultError('UNKNOWN', err)
+        }
+    }
+
     handle(request) {
         const user = new User({
             username: request.parameters.username,
@@ -27,8 +38,9 @@ export class CreateUserMethod extends ModuleMethod {
         // Insert a new user into the collection
         User.collection.insertOne(user, (err) => {
             if (err) {
-                winstonLogger.error(err);
-                return request.error(null);
+                return request.error(
+                    this.handleError(err)
+                );
             }
             return request.respond(null);
         });

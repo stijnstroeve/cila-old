@@ -1,6 +1,7 @@
 import Color from './Color';
 import {loggerPrefixColor} from './constants';
 
+// TODO: Maybe use winston instead of this?
 export default class CilaLogger {
     /**
      * Logs the given message to the console
