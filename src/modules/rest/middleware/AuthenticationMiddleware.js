@@ -7,6 +7,7 @@ export class AuthenticationMiddleware extends Middleware {
         return (req, res, next) => {
             passport.authenticate('local', { session: false }, (err, user) => {
                 if(!user) {
+                    // If the user was not found, return an unknown credentials error
                     request.error(
                         ResultError('UNKNOWN_CREDENTIALS', err)
                     );

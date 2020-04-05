@@ -7,6 +7,7 @@ export class AuthorizationMiddleware extends Middleware {
         return (req, res, next) => {
             passport.authenticate('jwt', { session: false }, (err, user) => {
                 if(!user) {
+                    // If the user was not found, return an unauthorized error
                     request.error(
                         ResultError('UNAUTHORIZED', err)
                     );

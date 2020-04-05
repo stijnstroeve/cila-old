@@ -1,6 +1,12 @@
 import os from 'os';
 
+
 export default class System {
+
+    /**
+     * Creates a system instance
+     * This class includes properties used in the system info
+     */
     constructor() {
         this.hostname = os.hostname();
         this.platform = os.platform();

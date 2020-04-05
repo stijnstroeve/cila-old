@@ -5,6 +5,14 @@ import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import config from '../core/configurations/config';
 
+/**
+ * Winston logger
+ *
+ * Makes sure all errors that are logged with "winstonLogger.error()"
+ * are logged in a file that will be rotated every day so that the
+ * log file won't get too big.
+ * @type {winston.Logger}
+ */
 const winstonLogger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),

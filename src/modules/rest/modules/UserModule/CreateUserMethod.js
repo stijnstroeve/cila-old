@@ -19,6 +19,11 @@ export class CreateUserMethod extends ModuleMethod {
         this.middleware = [];
     }
 
+    /**
+     * Handles the given mongodb error
+     * @param err
+     * @returns {Error}
+     */
     handleError(err) {
         const errorType = getMongoError(err);
         if(errorType === MONGODB_DUPLICATION_KEY) {

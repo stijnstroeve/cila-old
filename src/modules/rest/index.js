@@ -2,8 +2,10 @@ import express from 'express';
 import passport from '../auth/passport';
 import bodyParser from 'body-parser';
 import {Paper} from 'paper-wrapper';
+import socket from 'socket.io';
 import CilaLogger from '../logger/CilaLogger';
 import UserModule from './modules/UserModule';
+import SocketHandler from '../sockets';
 
 export default class RestAPI {
     constructor(environment) {
@@ -19,9 +21,12 @@ export default class RestAPI {
     listen(port) {
         this.port = port;
 
-        this.app.listen(this.port, () => {
+        this.server = this.app.listen(this.port, () => {
             CilaLogger.log('Started REST API on port ' + this.port);
         });
+
+        // Create the socket handler instance
+        this.socketHandler = new SocketHandler(socket(this.server));
     }
 
     _initializePaper(environment) {
