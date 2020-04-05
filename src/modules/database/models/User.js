@@ -23,7 +23,7 @@ export const UserSchema = new Schema({
         lowercase: true,
         unique: true,
         required: [true, 'Email address is required'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill in a valid email address'],
+        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill in a valid email address'],
         index: true
     },
     hash: String,

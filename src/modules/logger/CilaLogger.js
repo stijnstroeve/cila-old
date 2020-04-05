@@ -8,6 +8,7 @@ export default class CilaLogger {
      * @param message The message to log
      */
     static log(message) {
+        // eslint-disable-next-line no-console
         console.log(this._getPrefix(), message);
     }
 
