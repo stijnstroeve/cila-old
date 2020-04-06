@@ -3,6 +3,8 @@ import DatabaseConnector from '../database/DatabaseConnector';
 import CilaLogger from '../logger/CilaLogger';
 import RestAPI from '../rest';
 import config from './configurations/config';
+import SocketHandler from '../sockets';
+import {SYSTEM_ROOM} from '../sockets/constants';
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',
@@ -29,9 +31,9 @@ export default class Application {
             this.database = database;
 
             // When successfully connected to the database, start the application interval timer and initialize the rest api
-            this._startInterval();
             this._initializeRestAPI();
 
+            this._startInterval();
         }).catch(() => {
             // When no connection to the database could be made, exit the application
             // process.exit(1); //TODO Uncomment this
@@ -67,6 +69,7 @@ export default class Application {
         if (this.system !== undefined) {
             this.system.updateUptime();
 
+            this.restAPI.socketHandler.sendData(SYSTEM_ROOM, this.system);
             // CilaLogger.log('New Uptime: ' + this.system.uptime);
         }
     }

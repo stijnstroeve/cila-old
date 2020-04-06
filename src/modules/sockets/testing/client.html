@@ -1,0 +1,19 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
+<body>
+    <script>
+        const SYSTEM_ROOM = 'system-room';
+
+        const socket = io('http://127.0.0.1:8888');
+        socket.emit('subscribe', SYSTEM_ROOM);
+        socket.on('connect', function () {
+            console.log('Connected');
+        });
+        socket.on(SYSTEM_ROOM, function (data) {
+            console.log(data);
+        });
+    </script>
+</body>
+</html>
