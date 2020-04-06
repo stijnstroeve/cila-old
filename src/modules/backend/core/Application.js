@@ -3,7 +3,6 @@ import DatabaseConnector from '../database/DatabaseConnector';
 import CilaLogger from '../logger/CilaLogger';
 import RestAPI from '../rest';
 import config from './configurations/config';
-import SocketHandler from '../sockets';
 import {SYSTEM_ROOM} from '../sockets/constants';
 
 const ApplicationState = Object.freeze({
