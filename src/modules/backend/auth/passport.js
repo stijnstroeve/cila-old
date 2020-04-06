@@ -1,4 +1,4 @@
-import passport from 'passport';
+import passport from 'src/modules/backend/auth/passport';
 import LocalStrategy from 'passport-local';
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
 import User from '../database/models/User';
