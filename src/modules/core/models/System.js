@@ -11,15 +11,19 @@ export default class System {
         this.hostname = os.hostname();
         this.platform = os.platform();
         this.architecture = os.arch();
+
+        this.update();
+    }
+
+    /**
+     * Updates the system data in this instance
+     */
+    update() {
         this.cpu = os.cpus();
         this.freeMemory = os.freemem();
         this.totalMemory = os.totalmem();
         this.load = os.loadavg();
         this.networkInterfaces = os.networkInterfaces();
-        this.uptime = os.uptime();
-    }
-
-    updateUptime() {
         this.uptime = os.uptime();
     }
 }

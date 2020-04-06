@@ -67,10 +67,9 @@ export default class Application {
 
     _tick() {
         if (this.system !== undefined) {
-            this.system.updateUptime();
+            this.system.update();
 
             this.restAPI.socketHandler.sendData(SYSTEM_ROOM, this.system);
-            // CilaLogger.log('New Uptime: ' + this.system.uptime);
         }
     }
 }
