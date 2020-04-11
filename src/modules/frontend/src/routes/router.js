@@ -1,7 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import LoginPage from './pages/LoginPage/LoginPage';
+import DashboardPage from '../pages/DashboardPage/DashboardPage';
+import LoginPage from '../pages/LoginPage/LoginPage';
+import PrivateRoute from './PrivateRoute';
 
 const Router = () => {
     return (
@@ -11,9 +12,9 @@ const Router = () => {
                 <Route path={'/login'}>
                     <LoginPage />
                 </Route>
-                <Route path={'/'} exact>
-                    <HomePage />
-                </Route>
+                <PrivateRoute path={'/'} exact>
+                    <DashboardPage />
+                </PrivateRoute>
             </Switch>
         </BrowserRouter>
     )

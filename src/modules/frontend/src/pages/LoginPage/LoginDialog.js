@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Formik} from 'formik';
+import {useHistory} from 'react-router-dom';
 import * as Yup from 'yup';
 import {loginUser} from '../../services/auth/actions';
 import TextField from '@material-ui/core/TextField';
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginDialog = (props) => {
     const classes = useStyles();
+    const history = useHistory();
     const [globalError, setGlobalError] = useState('');
 
     return (
@@ -38,6 +40,7 @@ const LoginDialog = (props) => {
                         () => {
                             alert('Welcome!');
                             // TODO Send user to home page.
+                            history.push('/');
                         },
                         // Error callback
                         (error) => {

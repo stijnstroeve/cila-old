@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from './router';
+import Router from './routes/router';
 import {Provider} from 'react-redux';
 import store from './services/store';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
