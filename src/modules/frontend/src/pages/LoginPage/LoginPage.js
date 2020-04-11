@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {REQUEST_LOGIN} from '../../services/webRequests/actionTypes';
-import {requestLoading} from '../../services/webRequests/selector';
+import {requestErrorMessage, requestLoading} from '../../services/webRequests/selector';
 import {loginUser} from '../../services/auth/actions';
-import BackendService from '../../services/backend/BackendService';
 
 const LoginPage = (props) => {
     const [email, setEmail] = useState('test');
     const [password, setPassword] = useState('test');
 
     const login = () => {
-        // props.loginUser(email, password)
-        new BackendService().sendRequest('post', ['test', 'test2'], 'requeset')
+        props.loginUser(email, password)
     };
 
     return (
@@ -24,13 +22,18 @@ const LoginPage = (props) => {
             {props.isLoading && (
                 <h1>Loading...</h1>
             )}
+
+            {props.errorMessage && (
+                <h1>{props.errorMessage}</h1>
+            )}
         </div>
     )
 };
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: requestLoading(state.web, REQUEST_LOGIN)
+        isLoading: requestLoading(state.web, REQUEST_LOGIN),
+        errorMessage: requestErrorMessage(state.web, REQUEST_LOGIN)
     }
 };
 

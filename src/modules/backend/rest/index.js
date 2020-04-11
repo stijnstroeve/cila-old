@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from '../auth/passport';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import {Paper} from 'paper-wrapper';
 import socket from 'socket.io';
 import CilaLogger from '../logger/CilaLogger';
@@ -47,6 +48,7 @@ export default class RestAPI {
         this.app.use(passport.initialize());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(cors());
 
         const paperRouter = paper.getRoutes();
         this.app.use(paperRouter);

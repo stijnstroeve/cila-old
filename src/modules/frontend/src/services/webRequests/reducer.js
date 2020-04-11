@@ -68,11 +68,11 @@ const reducer = (state = initialState, action) => {
 
             newState[prefix + '_FINISHED'] = true;
 
-            if(action.payload.response) {
+            if(action.payload && action.payload.data) {
                 // Set the data to the response of the request
-                newState[prefix + '_DATA'] = action.payload.response;
-            } else if(action.payload.error) {
-                newState[prefix + '_ERROR'] = action.payload.response;
+                newState[prefix + '_DATA'] = action.payload.data;
+            } else if(action.payload && action.payload.error) {
+                newState[prefix + '_ERROR'] = action.payload.error;
             }
             return newState;
         default:

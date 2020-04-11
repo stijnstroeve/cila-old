@@ -3,7 +3,7 @@ import config from './config';
 
 export default class BackendService {
     static _parseModules(modules) {
-        // If modules is not defined, return an empty strng
+        // If modules is not defined, return an empty string
         if(modules === undefined) return '';
 
         let moduleString = '';
@@ -19,12 +19,12 @@ export default class BackendService {
 
     /**
      * Sends a request to the backend given in the configuration
-     * @param method The request method(GET, POST, etc...)
+     * @param restMethod The request method(GET, POST, etc...)
      * @param modules The module(s) of the request
      * @param request The request name
      * @param params The parameters that should be send with the request
      */
-    sendRequest(method, modules, request, params) {
+    static sendRequest(restMethod, modules, request, params) {
         // Check if the modules contains of 1 module or multiple
         if(!Array.isArray(modules)) {
             modules = [modules];
@@ -33,10 +33,10 @@ export default class BackendService {
         // Get the parsed url
         const url = BackendService._parseUrl(modules, request);
 
-        axios({
-            method: method,
+        return axios({
+            method: restMethod,
             url: url,
             data: params || undefined
-        }).then(console.log).catch(console.error);
+        });
     }
 }

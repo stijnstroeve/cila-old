@@ -1,7 +1,15 @@
-import {REQUEST_LOGIN, started} from '../webRequests/actionTypes';
+import {apiRequest} from '../webRequests/actions';
+import {REQUEST_LOGIN} from '../webRequests/actionTypes';
 
 export const loginUser = (email, password) => {
-    return {
-        type: started(REQUEST_LOGIN)
-    }
+    return apiRequest({
+        requestName: REQUEST_LOGIN,
+        method: 'POST',
+        modules: 'user',
+        request: 'authenticate',
+        params: {
+            email,
+            password
+        }
+    })
 };
