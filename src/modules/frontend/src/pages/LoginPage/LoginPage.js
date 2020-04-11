@@ -3,13 +3,15 @@ import {connect} from 'react-redux';
 import {REQUEST_LOGIN} from '../../services/webRequests/actionTypes';
 import {requestLoading} from '../../services/webRequests/selector';
 import {loginUser} from '../../services/auth/actions';
+import BackendService from '../../services/backend/BackendService';
 
 const LoginPage = (props) => {
     const [email, setEmail] = useState('test');
     const [password, setPassword] = useState('test');
 
     const login = () => {
-        props.loginUser(email, password)
+        // props.loginUser(email, password)
+        new BackendService().sendRequest('post', ['test', 'test2'], 'requeset')
     };
 
     return (
