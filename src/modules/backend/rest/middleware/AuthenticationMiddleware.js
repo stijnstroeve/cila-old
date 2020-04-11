@@ -2,6 +2,7 @@ import passport from '../../auth/passport';
 import {Middleware} from 'paper-wrapper';
 import ResultError from '../error';
 
+// TODO: Maybe don't use this as middleware?
 export class AuthenticationMiddleware extends Middleware {
     handle(module, method, request) {
         return (req, res, next) => {

@@ -1,40 +1,16 @@
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {REQUEST_LOGIN} from '../../services/webRequests/actionTypes';
-import {requestErrorMessage, requestLoading} from '../../services/webRequests/selector';
-import {loginUser} from '../../services/auth/actions';
+import LoginDialog from './LoginDialog';
 
-const LoginPage = (props) => {
-    const [email, setEmail] = useState('test');
-    const [password, setPassword] = useState('test');
 
-    const login = () => {
-        props.loginUser(email, password)
-    };
+// Add snackbar when logged in https://material-ui.com/components/snackbars/
+const LoginPage = () => {
+    const [open, setOpen] = useState(true);
+
+    const handleClose = () => setOpen(false);
 
     return (
-        <div>
-            <h1>Login page</h1>
-            <input type={'email'} placeholder={'Email'} value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type={'password'} placeholder={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} />
-            <input type={'button'} value={'Submit'} onClick={() => login()} />
-
-            {props.isLoading && (
-                <h1>Loading...</h1>
-            )}
-
-            {props.errorMessage && (
-                <h1>{props.errorMessage}</h1>
-            )}
-        </div>
-    )
+        <LoginDialog open={open} onClose={handleClose} />
+    );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        isLoading: requestLoading(state.web, REQUEST_LOGIN),
-        errorMessage: requestErrorMessage(state.web, REQUEST_LOGIN)
-    }
-};
-
-export default connect(mapStateToProps, {loginUser})(LoginPage);
+export default LoginPage;

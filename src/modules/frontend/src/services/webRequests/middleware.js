@@ -39,7 +39,6 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
         let errorMessage = '';
         if (error.response) {
             // There was a response but was an error
-            // TODO: Set the right error message
             const responseData = error.response.data;
             if(responseData && !responseData.success) {
                 errorMessage = responseData.error.description;
@@ -48,7 +47,7 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
             }
         } else if (error.request) {
             // There was a request but no response
-            errorMessage = 'Invalid request';
+            errorMessage = 'Could not connect to server';
         } else {
             // There was no request and no response
             errorMessage = 'Invalid request';

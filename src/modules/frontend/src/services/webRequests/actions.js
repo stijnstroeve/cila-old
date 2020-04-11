@@ -1,6 +1,6 @@
 import {apiFinishType, apiStartType} from '../webRequests/actionTypes';
 
-export const apiRequest = ({requestName, method = 'GET', modules, request, params}) => {
+export const apiRequest = ({requestName, method = 'GET', modules, request, params, onSuccess, onError}) => {
     return {
         type: 'REQUEST',
         payload: {
@@ -8,6 +8,8 @@ export const apiRequest = ({requestName, method = 'GET', modules, request, param
             method,
             modules,
             request,
+            onSuccess,
+            onError,
             params
         }
     }
