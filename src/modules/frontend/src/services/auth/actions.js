@@ -3,7 +3,6 @@ import {REQUEST_LOGIN} from '../webRequests/actionTypes';
 import {SET_JWT} from './actionTypes';
 
 export const setJWT = (jwt) => {
-    console.log('o', jwt);
     return {
         type: SET_JWT,
         payload: jwt

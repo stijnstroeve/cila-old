@@ -7,7 +7,7 @@ import {apiMiddleware} from './webRequests/middleware';
 
 const persistConfig = {
     key: 'root',
-    whitelist: ['auth'],
+    whitelist: ['auth', 'config'],
     storage
 };
 

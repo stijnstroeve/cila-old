@@ -8,6 +8,7 @@ import {MuiThemeProvider as ThemeProvider} from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import {SnackbarProvider} from 'notistack';
 
 // TODO: Move this to a separate file
 const theme = createMuiTheme({
@@ -19,7 +20,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: theme.palette.primary[400],
+        // backgroundColor: theme.palette.primary[400],
         height: '100vh'
     }
 }));
@@ -45,9 +46,11 @@ const App = () => {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ThemeProvider theme={theme}>
-                    <RootWrapper>
-                        <Router />
-                    </RootWrapper>
+                    <SnackbarProvider>
+                        <RootWrapper>
+                            <Router />
+                        </RootWrapper>
+                    </SnackbarProvider>
                 </ThemeProvider>
             </PersistGate>
         </Provider>

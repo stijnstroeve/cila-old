@@ -1,0 +1,2 @@
+
+export const SET_MENU_DRAWER_OPEN = 'SET_MENU_DRAWER_OPEN';
