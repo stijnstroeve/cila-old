@@ -1,12 +1,11 @@
 {
   "name": "cila-backend",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "core/index.js",
+  "main": "src/core/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel  . -d lib --ignore node_modules,lib --copy-files",
-    "start": "babel . -d lib  --ignore node_modules,lib --copy-files && node lib/core/index.js"
+    "start": "babel src -d lib --copy-files && node lib/core/index.js"
   },
   "keywords": [
     "backend"
@@ -14,6 +13,7 @@
   "author": "Stijn Stroeve",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.9.5",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -29,5 +29,10 @@
     "socket.io": "^2.3.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5"
   }
 }

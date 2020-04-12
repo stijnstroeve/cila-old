@@ -2,17 +2,17 @@
   "name": "cila",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/core/index.js",
+  "main": "lib/backend/core/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src/modules/backend -d lib --copy-files",
-    "start": "babel src/modules/backend -d lib --copy-files && node lib/core/index.js"
+    "start:backend": "babel src/modules/backend/src -d lib/backend --copy-files && node lib/backend/core/index.js",
+    "start:frontend": "babel src/modules/backend -d lib --copy-files && node lib/core/index.js"
   },
   "author": "Stijn Stroeve",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0"
+    "@babel/preset-env": "^7.9.5"
   }
 }
