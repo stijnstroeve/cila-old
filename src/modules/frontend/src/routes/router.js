@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Switch} from 'react-router-dom';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import PrivateRoute, {AntiPrivateRoute} from './PrivateRoute';
@@ -7,7 +7,6 @@ import PrivateRoute, {AntiPrivateRoute} from './PrivateRoute';
 const Router = () => {
     return (
         <BrowserRouter>
-
             <Switch>
                 <AntiPrivateRoute path={'/login'}>
                     <LoginPage />

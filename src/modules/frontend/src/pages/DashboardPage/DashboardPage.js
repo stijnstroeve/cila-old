@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {setMenuDrawerOpen} from '../../services/configurations/actions';
 import {setJWT} from '../../services/auth/actions';
+import {withPage} from '../../routes/page';
 import {useHistory} from 'react-router-dom';
 import classnames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
@@ -200,4 +201,8 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {setJWT, setMenuDrawerOpen})(DashboardPage);
+// Wrap in page HOC
+export default withPage(
+    connect(mapStateToProps, {setJWT, setMenuDrawerOpen})(DashboardPage),
+    {title: 'Dashboard'}
+);
