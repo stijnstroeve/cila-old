@@ -26,7 +26,7 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     dispatch(apiStart(requestName));
 
     BackendService.sendRequest(method, modules, request, params).then((response) => {
-        const data = response.data || undefined;
+        const data = response.data.data || undefined;
 
         // Dispatch the api finished action
         dispatch(apiFinished(requestName, data));

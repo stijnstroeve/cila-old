@@ -2,16 +2,16 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute, {AntiPrivateRoute} from './PrivateRoute';
 
 const Router = () => {
     return (
         <BrowserRouter>
 
             <Switch>
-                <Route path={'/login'}>
+                <AntiPrivateRoute path={'/login'}>
                     <LoginPage />
-                </Route>
+                </AntiPrivateRoute>
                 <PrivateRoute path={'/'} exact>
                     <DashboardPage />
                 </PrivateRoute>

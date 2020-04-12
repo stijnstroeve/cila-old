@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import LoginDialog from './LoginDialog';
 
 
-// Add snackbar when logged in https://material-ui.com/components/snackbars/
+// TODO: Add snackbar when logged in https://material-ui.com/components/snackbars/
 const LoginPage = () => {
     const [open, setOpen] = useState(true);
 

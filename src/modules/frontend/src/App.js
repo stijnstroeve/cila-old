@@ -1,7 +1,8 @@
 import React from 'react';
 import Router from './routes/router';
 import {Provider} from 'react-redux';
-import store from './services/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import store, {persistor} from './services/store';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import {MuiThemeProvider as ThemeProvider} from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
@@ -38,14 +39,17 @@ const RootWrapper = (props) => {
     );
 };
 
+// TODO Persist Gate loader
 const App = () => {
     return (
         <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <RootWrapper>
-                    <Router />
-                </RootWrapper>
-            </ThemeProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <RootWrapper>
+                        <Router />
+                    </RootWrapper>
+                </ThemeProvider>
+            </PersistGate>
         </Provider>
     );
 };

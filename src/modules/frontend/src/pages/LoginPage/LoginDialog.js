@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Formik} from 'formik';
 import {useHistory} from 'react-router-dom';
 import * as Yup from 'yup';
-import {loginUser} from '../../services/auth/actions';
+import {loginUser, setJWT} from '../../services/auth/actions';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
@@ -27,6 +27,27 @@ const LoginDialog = (props) => {
     const history = useHistory();
     const [globalError, setGlobalError] = useState('');
 
+    const formSubmit = (resolve, values) => {
+        props.loginUser(values.email, values.password,
+            // Success callback
+            (data) => {
+                if(data.token) {
+                    // Set the JSON web token in the client
+                    props.setJWT(data.token);
+                }
+                // TODO Send user to home page.
+                history.push('/');
+            },
+            // Error callback
+            (error) => {
+                // Set the global error
+                if(typeof error === 'string') {
+                    setGlobalError(error);
+                }
+                resolve();
+            });
+    };
+
     return (
         <Formik
             initialValues={{
@@ -34,23 +55,7 @@ const LoginDialog = (props) => {
                 password: ''
             }}
             onSubmit={async (values) => {
-                await new Promise((resolve) => {
-                    props.loginUser(values.email, values.password,
-                        // Success callback
-                        () => {
-                            alert('Welcome!');
-                            // TODO Send user to home page.
-                            history.push('/');
-                        },
-                        // Error callback
-                        (error) => {
-                            // Set the global error
-                            if(typeof error === 'string') {
-                                setGlobalError(error);
-                            }
-                            resolve();
-                        });
-                });
+                await new Promise((resolve) => formSubmit(resolve, values));
             }}
             validationSchema={Yup.object().shape({
                 email: Yup.string()
@@ -60,7 +65,7 @@ const LoginDialog = (props) => {
                     .required('Required')
             })}
         >
-            {props => {
+            {(props) => {
                 const {
                     values,
                     errors,
@@ -117,4 +122,4 @@ const LoginDialog = (props) => {
         </Formik>)
 };
 
-export default connect(null, {loginUser})(LoginDialog);
+export default connect(null, {loginUser, setJWT})(LoginDialog);
