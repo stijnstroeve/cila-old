@@ -23,7 +23,7 @@ export const FileSchema = new Schema({
         required: [true, 'Hash type is required']
     },
     fileSize: {
-        type: String,
+        type: Number,
         required: [true, 'File size is required']
     },
     mimeType: {
@@ -71,6 +71,7 @@ FileSchema.methods.setDownloadUrl = function(file) {
 
 FileSchema.methods.toJSON = function() {
     return {
+        id: this._id,
         filename: this.filename,
         downloadUrl: this.downloadUrl,
         hash: this.hash,

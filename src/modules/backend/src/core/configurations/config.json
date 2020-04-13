@@ -12,5 +12,6 @@
   "max_log_file_size": "1m",
   "max_log_files": 10,
   "file_upload_path": "/data/uploads/",
-  "max_file_size": "2m"
+  "max_upload_files": 5,
+  "max_file_size_in_bytes": 10000000
 }
