@@ -9,6 +9,7 @@ import UserModule from './modules/UserModule/module';
 import SocketHandler from '../sockets';
 import FileModule from './modules/FileModule/module';
 import {FILE_UPLOAD_PATH_PREFIX} from '../files/constants';
+import ProfileModule from './modules/UserModule/ProfileModule/module';
 
 export default class RestAPI {
     constructor(environment) {
@@ -64,6 +65,7 @@ export default class RestAPI {
         // Register the paper modules
         paper.addModules([
             new UserModule(),
+            new ProfileModule(),
             new FileModule()
         ]);
 

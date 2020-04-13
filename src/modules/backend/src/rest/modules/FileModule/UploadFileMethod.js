@@ -5,6 +5,7 @@ import File from '../../../database/models/File';
 import ResultError from '../../error';
 import {handleMongoError} from '../../../database/mongoError';
 import config from '../../../core/configurations/config';
+import {handleFileError} from '../../../files/fileError';
 
 export class UploadFileMethod extends ModuleMethod {
     constructor() {
@@ -49,34 +50,13 @@ export class UploadFileMethod extends ModuleMethod {
         });
     }
 
-    _handleFileError(err) {
-        if(err.name === 'MulterError') {
-            if(err.code === 'LIMIT_UNEXPECTED_FILE') {
-                // Too many files uploaded
-                return ResultError('TOO_MANY_FILES', err, {
-                    variables: [
-                        {name: 'FIELD', variable: err.field || 'unknown'}
-                    ]
-                });
-            } else if(err.code === 'LIMIT_FILE_SIZE') {
-                // The uploaded file was larger than defined in config
-                return ResultError('FILE_TOO_LARGE', err);
-            } else if(err.code === 'MIME_TYPE_NOT_ALLOWED') {
-                // The uploaded file was larger than defined in config
-                return ResultError('MIME_TYPE_NOT_ALLOWED', err);
-            }
-
-        }
-        return ResultError('UNKNOWN_ERROR', err);
-    }
-
     handle(request) {
         const upload = multerUpload.fields([
             {name: 'files', maxCount: config.max_upload_files}
         ]);
         return upload(request.request, request.response, async (err) => {
             if(err) return request.error(
-                this._handleFileError(err)
+                handleFileError(err)
             );
 
             // Grab the files out of the "files" field

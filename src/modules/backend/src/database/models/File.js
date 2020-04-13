@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import fs from 'fs';
+import multer from 'multer';
 
 const Schema = mongoose.Schema;
 
@@ -79,6 +80,26 @@ FileSchema.methods.toJSON = function() {
         fileSize: this.fileSize,
         mimeType: this.mimeType
     };
+};
+
+FileSchema.statics.findAndValidate = function(id, options) {
+    options = options || {};
+
+    return new Promise((resolve, reject) => {
+        this.findOne({_id: id}, (err, file) => {
+            if (err) return reject(err);
+
+            if(options.mimeTypes) {
+                // Reject all invalid mime types
+                if(!options.mimeTypes.includes(file.mimeType)) {
+                    return reject(new multer.MulterError('MIME_TYPE_NOT_ALLOWED'));
+                }
+            }
+
+            resolve(file);
+        });
+    });
+
 };
 
 const File = mongoose.model('File', FileSchema);

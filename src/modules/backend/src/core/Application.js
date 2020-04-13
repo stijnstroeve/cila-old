@@ -36,7 +36,7 @@ export default class Application {
             this._startInterval();
         }).catch(() => {
             // When no connection to the database could be made, exit the application
-            // process.exit(1); //TODO Uncomment this
+            process.exit(1);
         });
 
     }

@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import config from '../../core/configurations/config';
+import File from './File';
+import winstonLogger from '../../logger/winston';
+import {ProfileSchema} from './Profile';
+import {IMAGE_MIME_TYPES} from '../../files/constants';
 
 const Schema = mongoose.Schema;
 
@@ -28,6 +32,7 @@ export const UserSchema = new Schema({
     },
     hash: String,
     salt: String,
+    profile: ProfileSchema,
     disabled: {
         type: Boolean,
         default: false
@@ -57,6 +62,31 @@ UserSchema.methods.generateJWT = function() {
     }, config.jwt_secret);
 };
 
+UserSchema.methods.setProfilePicture = function(fileId) {
+    return new Promise((resolve, reject) => {
+        File.findAndValidate(fileId, {
+            // Make sure the file is an image
+            mimeTypes: IMAGE_MIME_TYPES
+        }).then((file) => {
+            this.profile = {
+                pictureFile: file.downloadUrl
+            };
+
+            resolve();
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+};
+
+UserSchema.methods.toJSON = function() {
+    return {
+        username: this.username,
+        email: this.email,
+        profile: this.profile.toJSON()
+    };
+};
+
 UserSchema.methods.toAuthJSON = function() {
     return {
         username: this.username,
@@ -64,6 +94,7 @@ UserSchema.methods.toAuthJSON = function() {
         token: this.generateJWT()
     };
 };
+
 const User = mongoose.model('User', UserSchema);
 
 export default User;

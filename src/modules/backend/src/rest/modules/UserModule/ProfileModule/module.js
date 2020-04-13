@@ -1,11 +1,12 @@
 import {Module} from 'paper-wrapper';
+import {SetProfilePictureMethod} from './SetProfilePictureMethod';
 
 export default class ProfileModule extends Module {
     constructor() {
         super();
 
         this.moduleMethods = [
-
+            new SetProfilePictureMethod()
         ];
         this.name = 'profile';
 
