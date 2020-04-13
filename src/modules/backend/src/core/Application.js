@@ -4,6 +4,7 @@ import CilaLogger from '../logger/CilaLogger';
 import RestAPI from '../rest';
 import config from './configurations/config';
 import {SYSTEM_ROOM} from '../sockets/constants';
+import {initializeFileUpload} from '../files';
 
 const ApplicationState = Object.freeze({
     STARTING: 'starting',
@@ -29,8 +30,8 @@ export default class Application {
         DatabaseConnector.connect().then((database) => {
             this.database = database;
 
-            // When successfully connected to the database, start the application interval timer and initialize the rest api
-            this._initializeRestAPI();
+            // When successfully connected to the database, start the application interval timer and initialize all modules
+            this._initializeModules();
 
             this._startInterval();
         }).catch(() => {
@@ -55,7 +56,11 @@ export default class Application {
         process.exit(0);
     }
 
-    _initializeRestAPI() {
+    _initializeModules() {
+        // File upload module
+        initializeFileUpload();
+
+        // Rest API module
         this.restAPI = new RestAPI(config.environment);
         this.restAPI.listen(config.rest_api_port);
     }
@@ -71,4 +76,5 @@ export default class Application {
             this.restAPI.socketHandler.sendData(SYSTEM_ROOM, this.system);
         }
     }
+
 }

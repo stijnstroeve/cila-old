@@ -1,5 +1,5 @@
 import multer from 'multer';
-import {parseFilename} from './helper';
+import {getFullUploadPath, parseFilename} from './index';
 
 /**
  * Handles the storage of multer(form-data file parser)
@@ -7,7 +7,7 @@ import {parseFilename} from './helper';
  */
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './public/data/uploads/')
+        cb(null, getFullUploadPath())
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);

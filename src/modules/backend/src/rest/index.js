@@ -8,6 +8,7 @@ import CilaLogger from '../logger/CilaLogger';
 import UserModule from './modules/UserModule/module';
 import SocketHandler from '../sockets';
 import FileModule from './modules/FileModule/module';
+import {FILE_UPLOAD_PATH_PREFIX} from '../files/constants';
 
 export default class RestAPI {
     constructor(environment) {
@@ -33,19 +34,23 @@ export default class RestAPI {
 
     _setupMiddleware(paper) {
         // Middleware
-        this._setupStaticFolder();
+
+        // Static file upload path
+        this.app.use('/' + FILE_UPLOAD_PATH_PREFIX, express.static(FILE_UPLOAD_PATH_PREFIX));
+
+        // Initialize passport
         this.app.use(passport.initialize());
+
+        // Initialize request body
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+
+        // Initialize CORS
         this.app.use(cors());
 
         // Paper middleware
         const paperRouter = paper.getRoutes();
         this.app.use(paperRouter);
-    }
-
-    _setupStaticFolder() {
-        this.app.use('/public', express.static('public'));
     }
 
     _initializePaper(environment) {

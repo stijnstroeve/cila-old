@@ -10,5 +10,7 @@
   "password_key_length": 512,
   "log_directory": "logs/",
   "max_log_file_size": "1m",
-  "max_log_files": 10
+  "max_log_files": 10,
+  "file_upload_path": "/data/uploads/",
+  "max_file_size": "2m"
 }

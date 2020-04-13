@@ -32,7 +32,9 @@ export const UserSchema = new Schema({
         type: Boolean,
         default: false
     }
-}, {timestamps: true});
+}, {
+    timestamps: true
+});
 
 UserSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
