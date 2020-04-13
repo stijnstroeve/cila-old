@@ -5,8 +5,9 @@ import cors from 'cors';
 import {Paper} from 'paper-wrapper';
 import socket from 'socket.io';
 import CilaLogger from '../logger/CilaLogger';
-import UserModule from './modules/UserModule';
+import UserModule from './modules/UserModule/module';
 import SocketHandler from '../sockets';
+import FileModule from './modules/FileModule/module';
 
 export default class RestAPI {
     constructor(environment) {
@@ -30,6 +31,23 @@ export default class RestAPI {
         this.socketHandler = new SocketHandler(socket(this.server));
     }
 
+    _setupMiddleware(paper) {
+        // Middleware
+        this._setupStaticFolder();
+        this.app.use(passport.initialize());
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(cors());
+
+        // Paper middleware
+        const paperRouter = paper.getRoutes();
+        this.app.use(paperRouter);
+    }
+
+    _setupStaticFolder() {
+        this.app.use('/public', express.static('public'));
+    }
+
     _initializePaper(environment) {
         // Create a new paper wrapper instance with the given config
         const paper = new Paper({
@@ -40,17 +58,10 @@ export default class RestAPI {
 
         // Register the paper modules
         paper.addModules([
-            new UserModule()
+            new UserModule(),
+            new FileModule()
         ]);
 
-
-        // Middleware
-        this.app.use(passport.initialize());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use(cors());
-
-        const paperRouter = paper.getRoutes();
-        this.app.use(paperRouter);
+        this._setupMiddleware(paper);
     }
 }

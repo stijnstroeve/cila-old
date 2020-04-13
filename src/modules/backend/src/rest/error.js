@@ -2,7 +2,7 @@ import {ErrorType, Error} from 'paper-wrapper';
 import winstonLogger from '../logger/winston';
 
 ErrorType.registerType('UNKNOWN_CREDENTIALS', 1, 'Unknown email or password.', 401);
-ErrorType.registerType('UNAUTHORIZED', 2, 'You are not authorized.', 401);
+ErrorType.registerType('UNAUTHORIZED', 2, 'You are not authorized to access this resource.', 401);
 ErrorType.registerType('USER_EXISTS', 3, 'A user with this email already exists.', 409);
 
 /**
