@@ -1,8 +1,6 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
 import User from '../../../database/models/User';
-import ResultError from '../../error';
-import {getMongoError, handleMongoError} from '../../../database/mongoError';
-import {MONGODB_DUPLICATION_KEY, MONGODB_VALIDATION_ERROR} from '../../../database/constants';
+import {handleMongoError} from '../../../database/mongoError';
 
 export class CreateUserMethod extends ModuleMethod {
     constructor() {
