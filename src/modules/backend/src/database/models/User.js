@@ -64,18 +64,26 @@ UserSchema.methods.generateJWT = function() {
 
 UserSchema.methods.setProfilePicture = function(fileId) {
     return new Promise((resolve, reject) => {
-        File.findAndValidate(fileId, {
-            // Make sure the file is an image
-            mimeTypes: IMAGE_MIME_TYPES
-        }).then((file) => {
-            this.profile = {
-                pictureFile: file.downloadUrl
-            };
+        if(fileId) {
+            File.findAndValidate(fileId, {
+                // Make sure the file is an image
+                mimeTypes: IMAGE_MIME_TYPES
+            }).then((file) => {
+                this.profile = {
+                    pictureFile: file.downloadUrl
+                };
 
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        } else {
+            this.profile = {
+                pictureFile: undefined
+            };
             resolve();
-        }).catch((err) => {
-            reject(err);
-        });
+        }
+
     })
 };
 

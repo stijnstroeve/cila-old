@@ -1,32 +1,30 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
 import {AuthorizationMiddleware} from '../../../middleware/AuthorizationMiddleware';
 import {handleFileError} from '../../../../files/fileError';
+import {handleMongoError} from '../../../../database/mongoError';
 
-export class SetProfilePictureMethod extends ModuleMethod {
+export class DeleteProfilePictureMethod extends ModuleMethod {
     constructor() {
         super();
 
         this.optionalParameters = [];
-        this.request = 'set-profile-picture';
-        this.requestType = RequestType.POST;
-        this.requiredParameters = [
-            {name: 'fileId', type: 1}, // TODO: Make "STRING" when fixed in paper-wrapper
-        ];
+        this.request = 'delete-profile-picture';
+        this.requestType = RequestType.DELETE;
+        this.requiredParameters = [];
         this.middleware = [new AuthorizationMiddleware()];
     }
 
     handle(request) {
         const {user} = request.request;
-        const {fileId} = request.parameters;
 
-        user.setProfilePicture(fileId).then(async () => {
+        // Set the profile picture to null, so it will be deleted
+        user.setProfilePicture(null).then(async () => {
             await user.save();
 
-            request.respond(user.profile.toJSON());
+            request.respond(null);
         }).catch((err) => {
-            // TODO: Create global error handler????? Maybe handy because this needs handleFileError and handleMongoError
             request.error(
-                handleFileError(err)
+                handleMongoError(err)
             );
         });
     }
