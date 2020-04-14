@@ -1,6 +1,7 @@
-import {MONGODB_DUPLICATION_KEY, MONGODB_OTHER_KEY, MONGODB_VALIDATION_ERROR} from './constants';
+import {MONGODB_CAST_ERROR, MONGODB_DUPLICATION_KEY, MONGODB_OTHER_KEY, MONGODB_VALIDATION_ERROR} from './constants';
 import ResultError from '../rest/error';
 
+// TODO: MONGODB_NOT_FOUND_ERROR
 const getMongoError = ((mongodbError) => {
     if(mongodbError.name === 'MongoError') {
         switch(mongodbError.code) {
@@ -11,6 +12,8 @@ const getMongoError = ((mongodbError) => {
         }
     } else if(mongodbError.name === 'ValidationError') {
         return MONGODB_VALIDATION_ERROR;
+    } else if(mongodbError.name === 'CastError') {
+        return MONGODB_CAST_ERROR;
     }
     return MONGODB_OTHER_KEY;
 });
@@ -34,6 +37,10 @@ const handleMongoError = (err, options = {duplicateKey: DEFAULT_DUPLICATE_ERROR}
         return ResultError(options.duplicateKey, err);
     } else if(errorType === MONGODB_VALIDATION_ERROR) {
         return ResultError('INVALID_PARAMETER', err, err.message);
+    } else if(errorType === MONGODB_VALIDATION_ERROR) {
+        return ResultError('INVALID_PARAMETER', err, err.message);
+    } else if(errorType === MONGODB_CAST_ERROR) {
+        return ResultError('CAST_ERROR', err, err.message);
     } else {
         return ResultError('UNKNOWN', err);
     }

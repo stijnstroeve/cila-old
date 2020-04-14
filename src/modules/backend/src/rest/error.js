@@ -11,6 +11,8 @@ ErrorType.registerType('NO_FILES_UPLOADED', 7, 'No files were uploaded.', 400);
 ErrorType.registerType('TOO_MANY_FILES', 8, 'Too many files were uploaded in form-data field "[FIELD]"', 400);
 ErrorType.registerType('FILE_TOO_LARGE', 9, 'Uploaded file is too large.', 400);
 ErrorType.registerType('MIME_TYPE_NOT_ALLOWED', 10, 'Uploaded file mime type is not allowed.', 400);
+ErrorType.registerType('CAST_ERROR', 11, 'Parameter field(s) could not be cast to right type.', 400);
+ErrorType.registerType('DOCUMENT_NOT_FOUND', 12, 'Document with [FIELD]=[VALUE] not found.', 400);
 
 /**
  * Creates a paper-wrapper error

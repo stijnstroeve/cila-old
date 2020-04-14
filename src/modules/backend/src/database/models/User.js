@@ -87,6 +87,34 @@ UserSchema.methods.setProfilePicture = function(fileId) {
     })
 };
 
+UserSchema.methods.setDisabled = function(disabled) {
+    this.disabled = disabled;
+    return new Promise((resolve, reject) => {
+
+
+        if(fileId) {
+            File.findAndValidate(fileId, {
+                // Make sure the file is an image
+                mimeTypes: IMAGE_MIME_TYPES
+            }).then((file) => {
+                this.profile = {
+                    pictureFile: file.downloadUrl
+                };
+
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        } else {
+            this.profile = {
+                pictureFile: undefined
+            };
+            resolve();
+        }
+
+    })
+};
+
 UserSchema.methods.toJSON = function() {
     return {
         username: this.username,
