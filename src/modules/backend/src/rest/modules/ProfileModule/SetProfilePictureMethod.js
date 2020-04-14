@@ -1,6 +1,6 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
-import {AuthorizationMiddleware} from '../../../middleware/AuthorizationMiddleware';
-import {handleFileError} from '../../../../files/fileError';
+import {AuthorizationMiddleware} from '../../middleware/AuthorizationMiddleware';
+import {handleFileError} from '../../../files/fileError';
 
 export class SetProfilePictureMethod extends ModuleMethod {
     constructor() {

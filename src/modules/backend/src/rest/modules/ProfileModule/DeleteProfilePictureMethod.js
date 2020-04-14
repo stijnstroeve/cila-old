@@ -1,7 +1,7 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
-import {AuthorizationMiddleware} from '../../../middleware/AuthorizationMiddleware';
-import {handleFileError} from '../../../../files/fileError';
-import {handleMongoError} from '../../../../database/mongoError';
+import {AuthorizationMiddleware} from '../../middleware/AuthorizationMiddleware';
+import {handleFileError} from '../../../files/fileError';
+import {handleMongoError} from '../../../database/mongoError';
 
 export class DeleteProfilePictureMethod extends ModuleMethod {
     constructor() {

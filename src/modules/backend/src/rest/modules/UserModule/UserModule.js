@@ -1,7 +1,7 @@
 import {Module} from 'paper-wrapper';
-import {AuthorizeMethod} from './AuthorizeMethod';
-import {AuthenticateMethod} from './AuthenticateMethod';
-import {CreateUserMethod} from './CreateUserMethod';
+import {AuthorizeMethod} from './methods/AuthorizeMethod';
+import {AuthenticateMethod} from './methods/AuthenticateMethod';
+import {UserMethods} from './crud/UserMethods';
 
 export default class UserModule extends Module {
     constructor() {
@@ -10,7 +10,9 @@ export default class UserModule extends Module {
         this.moduleMethods = [
             new AuthorizeMethod(),
             new AuthenticateMethod(),
-            new CreateUserMethod()
+
+            // User CRUD
+            ...new UserMethods().getMethods()
         ];
         this.name = 'user';
     }

@@ -1,5 +1,5 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
-import {AuthorizationMiddleware} from '../../middleware/AuthorizationMiddleware';
+import {AuthorizationMiddleware} from '../../../middleware/AuthorizationMiddleware';
 
 export class AuthorizeMethod extends ModuleMethod {
     constructor() {

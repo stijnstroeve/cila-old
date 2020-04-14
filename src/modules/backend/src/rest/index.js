@@ -5,11 +5,11 @@ import cors from 'cors';
 import {Paper} from 'paper-wrapper';
 import socket from 'socket.io';
 import CilaLogger from '../logger/CilaLogger';
-import UserModule from './modules/UserModule/module';
+import UserModule from './modules/UserModule/UserModule';
 import SocketHandler from '../sockets';
 import FileModule from './modules/FileModule/module';
 import {FILE_UPLOAD_PATH_PREFIX} from '../files/constants';
-import ProfileModule from './modules/UserModule/ProfileModule/module';
+import ProfileModule from './modules/ProfileModule/module';
 
 export default class RestAPI {
     constructor(environment) {

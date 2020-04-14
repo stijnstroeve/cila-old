@@ -1,5 +1,5 @@
 import {ModuleMethod, RequestType} from 'paper-wrapper';
-import {AuthenticationMiddleware} from '../../middleware/AuthenticationMiddleware';
+import {AuthenticationMiddleware} from '../../../middleware/AuthenticationMiddleware';
 
 export class AuthenticateMethod extends ModuleMethod {
     constructor() {
