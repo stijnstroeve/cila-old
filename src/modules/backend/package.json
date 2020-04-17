@@ -2,7 +2,7 @@
   "name": "cila-backend",
   "version": "0.1.0",
   "description": "",
-  "main": "src/core/index.js",
+  "main": "src/core/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel src -d lib --copy-files && node lib/core/index.js"
@@ -35,6 +35,17 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.5"
+    "@babel/preset-env": "^7.9.5",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/mongodb": "^3.5.8",
+    "@types/mongoose": "^5.7.11",
+    "@types/multer": "^1.4.2",
+    "@types/passport": "^1.0.3",
+    "@types/passport-jwt": "^3.0.3",
+    "@types/passport-local": "^1.0.33",
+    "@types/socket.io": "^2.1.4"
   }
 }
