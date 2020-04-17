@@ -12,9 +12,9 @@ import {FILE_UPLOAD_PATH_PREFIX} from '../files/constants';
 import ProfileModule from './modules/ProfileModule/ProfileModule';
 
 class RestAPI {
-    private app: express.Application;
-    private port: number;
+    public app: express.Application;
     public socketHandler: SocketHandler;
+    private port: number;
 
     constructor(environment: "development" | "production") {
         this.app = express();
