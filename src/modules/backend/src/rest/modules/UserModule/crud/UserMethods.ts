@@ -51,7 +51,7 @@ class UserMethods extends CRUDMethods {
                     })
                 );
             }
-            return request.respond(null);
+            return request.respond(user.toJSON());
         });
     }
 

@@ -20,10 +20,10 @@ interface IUser extends mongoose.Document {
 
     setPassword(password: BinaryLike): Function;
     validPassword(password: BinaryLike): Function;
-    generateJWT(): Function;
+    generateJWT(): string;
     setProfilePicture(): Promise<any>;
-    toJSON(): Function;
-    toAuthJSON(): Function;
+    toJSON(): object;
+    toAuthJSON(): object;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -100,17 +100,10 @@ UserSchema.methods.setProfilePicture = function(fileId: number) {
 
 UserSchema.methods.toJSON = function() {
     return {
+        id: this._id,
         username: this.username,
         email: this.email,
-        profile: this.profile.toJSON()
-    };
-};
-
-UserSchema.methods.toAuthJSON = function() {
-    return {
-        username: this.username,
-        email: this.email,
-        token: this.generateJWT()
+        profile: this.profile ? this.profile.toJSON() : undefined
     };
 };
 

@@ -74,7 +74,7 @@ FileSchema.methods.calculateHash = function(file: Express.Multer.File) {
             this.hashType = hashType;
             this.hash = hash.digest('hex');
 
-             resolve();
+             resolve(this.hash);
         });
 
         readStream.on('error', (err) => {
