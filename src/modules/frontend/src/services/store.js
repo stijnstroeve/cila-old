@@ -13,7 +13,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Create the redux store with the react-thunk middleware
+// Create the redux store with the react-thunk Middleware
 const store = createStore(persistedReducer, applyMiddleware(thunk, apiMiddleware));
 const persistor = persistStore(store);
 

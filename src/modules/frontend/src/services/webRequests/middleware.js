@@ -38,12 +38,12 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     }).catch((error) => {
         let errorMessage = '';
         if (error.response) {
-            // There was a response but was an error
+            // There was a response but was an Error
             const responseData = error.response.data;
             if(responseData && !responseData.success) {
                 errorMessage = responseData.error.description;
             } else {
-                errorMessage = 'Unknown error';
+                errorMessage = 'Unknown Error';
             }
         } else if (error.request) {
             // There was a request but no response
@@ -53,7 +53,7 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
             errorMessage = 'Invalid request';
         }
 
-        // Dispatch the api error action
+        // Dispatch the api Error action
         dispatch(apiError(requestName, errorMessage));
 
         // Execute the callback

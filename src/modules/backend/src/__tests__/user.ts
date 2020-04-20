@@ -1,11 +1,11 @@
 import chai, {expect} from 'chai';
 import chaiHttp from 'chai-http';
 import faker from 'faker';
-import User from '../database/models/User';
+import User from '../Database/Models/User';
 import DemoUser from './models/DemoUser';
 
-// Setup rest api
-import RestAPI from '../rest/index';
+// Setup Http api
+import RestAPI from '../Http/RestAPI';
 const rest = new RestAPI('development');
 
 // Setup chai

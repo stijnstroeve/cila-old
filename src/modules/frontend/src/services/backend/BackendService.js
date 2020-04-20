@@ -3,7 +3,7 @@ import config from '../../config.json';
 
 export default class BackendService {
     static _parseModules(modules) {
-        // If modules is not defined, return an empty string
+        // If Modules is not defined, return an empty string
         if(modules === undefined) return '';
 
         let moduleString = '';
@@ -25,7 +25,7 @@ export default class BackendService {
      * @param params The parameters that should be send with the request
      */
     static sendRequest(restMethod, modules, request, params) {
-        // Check if the modules contains of 1 module or multiple
+        // Check if the Modules contains of 1 module or multiple
         if(!Array.isArray(modules)) {
             modules = [modules];
         }

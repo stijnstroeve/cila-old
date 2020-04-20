@@ -2,10 +2,10 @@
   "name": "cila-backend",
   "version": "0.1.0",
   "description": "",
-  "main": "src/core/index.ts",
+  "main": "src/Core/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel src -d lib --copy-files && node lib/core/index.js"
+    "start": "babel src -d lib --copy-files && node lib/index.js"
   },
   "keywords": [
     "backend"

@@ -49,7 +49,7 @@ const LoginDialog = (props) => {
             },
             // Error callback
             (error) => {
-                // Set the global error
+                // Set the global Error
                 if(typeof error === 'string') {
                     setGlobalError(error);
                 }

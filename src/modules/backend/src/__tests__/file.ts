@@ -1,11 +1,11 @@
 import chai, {expect} from 'chai';
 import chaiHttp from 'chai-http';
-import File from '../database/models/File';
+import File from '../Database/Models/File';
 import DemoUser from './models/DemoUser';
 import fs from 'fs';
 
-// Setup rest api
-import RestAPI from '../rest/index';
+// Setup Http api
+import RestAPI from '../Http/RestAPI';
 const rest = new RestAPI('development');
 
 // Setup chai
@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 // Tests
 describe('File', () => {
 
-    describe('POST /file/file-upload', () => {
+    describe('POST /file/file-upload for successful upload', () => {
 
         let createdFileData: any = null;
 
@@ -65,70 +65,24 @@ describe('File', () => {
         });
     });
 
-    // let createdUserId: string = '';
-    //
-    // describe('POST /user/users', () => {
-    //     const req = {
-    //         'username': 'testuser',
-    //         'email': faker.internet.email().toLowerCase(),
-    //         'password': faker.internet.password()
-    //     };
-    //
-    //     it('it should create a user', (done) => {
-    //
-    //         chai.request(rest.app)
-    //             .post('/user/users')
-    //             .set('Authorization', 'Bearer ' + DemoUser.getInstance().jwt)
-    //             .send(req)
-    //             .end((err, res) => {
-    //
-    //                 // Make sure the request is success
-    //                 res.should.have.status(200);
-    //                 res.body.success.should.be.true;
-    //
-    //                 createdUserId = res.body.data.id;
-    //
-    //                 done();
-    //             });
-    //     });
-    //
-    //     it('it should have create a user in database', async () => {
-    //         const user = await User.findOne({ username: req.username });
-    //
-    //         user.should.not.be.null;
-    //         user.username.should.equal(req.username);
-    //         user.email.should.equal(req.email);
-    //     });
-    //
-    // });
-    //
-    // describe('DELETE /user/users', () => {
-    //
-    //     it('it should delete a user', (done) => {
-    //         const req = {
-    //             id: createdUserId
-    //         };
-    //
-    //         chai.request(rest.app)
-    //             .delete('/user/users')
-    //             .set('Authorization', 'Bearer ' + DemoUser.getInstance().jwt)
-    //             .send(req)
-    //             .end((err, res) => {
-    //
-    //                 // Make sure the request is success
-    //                 res.should.have.status(200);
-    //                 res.body.success.should.be.true;
-    //
-    //                 done();
-    //             });
-    //     });
-    //
-    //     it('it should have disabled a user in database', async () => {
-    //         const user = await User.findOne({ _id: createdUserId });
-    //
-    //         user.should.not.be.null;
-    //         user.disabled.should.be.true;
-    //     });
-    //
-    // });
+    describe('POST /file/file-upload for too big file', () => {
+
+        it('it should not upload the too big image file', (done) => {
+
+            chai.request(rest.app)
+                .post('/file/upload-file')
+                .attach('files', fs.readFileSync('src/__tests__/data/big_image_file.jpg'), 'big_image_file.jpg')
+                .set('Authorization', 'Bearer ' + DemoUser.getInstance().jwt)
+                .end((err, res) => {
+
+                    expect(res).to.have.status(400);
+                    expect(res.body.success).to.be.false;
+                    expect(res.body.error.key).to.equal('FILE_TOO_LARGE');
+
+                    done();
+                });
+        });
+
+    });
+
 });

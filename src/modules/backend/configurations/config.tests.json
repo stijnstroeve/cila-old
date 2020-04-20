@@ -1,0 +1,17 @@
+{
+  "environment": "test",
+  "tick_delay": 1,
+  "mongodb_url": "mongodb://localhost:27017/tests",
+  "mongodb_connection_tries": 1,
+  "rest_api_port": 8888,
+  "jwt_secret": "developmentkey",
+  "jwt_lifetime_days": 30,
+  "password_iterations": 15000,
+  "password_key_length": 512,
+  "log_directory": "logs/",
+  "max_log_file_size": "1m",
+  "max_log_files": 10,
+  "file_upload_path": "/tests/uploads/",
+  "max_upload_files": 5,
+  "max_file_size_in_bytes": 1000000
+}
