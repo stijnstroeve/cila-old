@@ -1,0 +1,12 @@
+version = 1
+
+test_patterns = ["*/__tests__/**.ts"]
+
+exclude_patterns = [
+    "*/node_modules",
+    "*/lib"
+]
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
